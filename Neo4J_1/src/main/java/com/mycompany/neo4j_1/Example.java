@@ -22,10 +22,14 @@ public class Example {
 
   public static void main(String...args) {
 
-    Driver driver = GraphDatabase.driver("neo4j://44.203.223.137:7687",
-              AuthTokens.basic("neo4j","commanders-pronoun-fountains"));
+    Driver driver = GraphDatabase.driver("neo4j://xxxxxxxxxxxxx",
+           AuthTokens.basic("xxxxxxxxxxxx","xxxxxxxxxxxxxxxxxx"));
+    var sessionConfig = SessionConfig.builder()
+        .withDefaultAccessMode(AccessMode.WRITE)
+        .withDatabase("people")
+        .build();
 
-    try (Session session = driver.session(SessionConfig.forDatabase("neo4j"))) {
+    try (Session session = driver.session(sessionConfig.forDatabase("neo4j"))) {
 
       String cypherQuery =
         "MATCH (m:Movie {title:$movie})<-[:RATED]-(u:User)-[:RATED]->(rec:Movie)\n" +
